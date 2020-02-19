@@ -21,36 +21,109 @@ namespace LinqExercise
              */
 
             //Print the Sum and Average of numbers
+            Console.WriteLine(numbers.Sum());
+            Console.WriteLine(numbers.Average());
 
             //Order numbers in ascending order and decsending order. Print each to console.
+            var ascOrder = numbers.OrderBy(item => item);
+
+            Console.WriteLine("----");
+            foreach (var number in ascOrder)
+            {
+                Console.WriteLine(number);
+            }
+
+            var descOrder = numbers.OrderByDescending(num => num);
+
+            Console.WriteLine("----");
+            foreach (var number in descOrder)
+            {
+
+                Console.WriteLine(number);
+            }
 
             //Print to the console only the numbers greater than 6
+            var greatThanSix = numbers.Where(num => num > 6);
+
+            Console.WriteLine("----");
+            foreach (var number in greatThanSix)
+            {
+
+                Console.WriteLine(number);
+            }
 
             //Order numbers in any order (acsending or desc) but only print 4 of them **foreach loop only!**
+            Console.WriteLine("----");
+
+            foreach (var num in descOrder.Take(4))
+            {
+                Console.WriteLine(num);
+            }
 
             //Change the value at index 4 to your age, then print the numbers in decsending order
+            Console.WriteLine("----");
+            //numbers[4] = 32;
+            numbers.SetValue(32, 4);
+
+            var descWithAge = numbers.OrderByDescending(num => num);
+
+            foreach (var number in descWithAge)
+            {
+                Console.WriteLine(number);
+            }
+
 
             // List of employees ***Do not remove this***
             var employees = CreateEmployees();
 
             //Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S.
             //Order this in acesnding order by FirstName.
+            var filtered = employees.Where(person => person.FirstName.ToLower().StartsWith('c') || person.FirstName.ToLower()[0] == 's')
+                            .OrderBy(person => person.FirstName);
+
+            var otherFiltered = employees.FindAll(name => name.FirstName.ToLower()[0] == 'c' || name.FirstName.ToLower()[0] == 's')
+                                .OrderBy(name => name.FirstName);
+
+            Console.WriteLine("----");
+            foreach (var person in filtered)
+            {
+                Console.WriteLine(person.FullName);
+            }
+
 
             //Print all the employees' FullName and Age who are over the age 26 to the console.
             //Order this by Age first and then by FirstName in the same result.
+            var twentySix = employees.Where(x => x.Age > 26).OrderByDescending(x => x.Age).ThenBy(x => x.FirstName);
+
+            Console.WriteLine("------");
+            foreach (var item in twentySix)
+            {
+                Console.WriteLine($"Name: {item.FullName}, Age: {item.Age}");
+            }
+
 
             //Print the Sum and then the Average of the employees' YearsOfExperience
             //if their YOE is less than or equal to 10 AND Age is greater than 35
+            var sumAndYOE = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35);
+
+            Console.WriteLine("------");
+            Console.WriteLine($"Total YOE:{sumAndYOE.Sum(x => x.YearsOfExperience)}");
+            Console.WriteLine($"Avg YOE:{sumAndYOE.Average(x => x.YearsOfExperience)}");
+
 
             //Add an employee to the end of the list without using employees.Add()
+            employees = employees.Append(new Employee("First", "Last", 30, 10)).ToList();
+            //employees.Add(new Employee("blah", "last", 45, 7));
 
-            
-            Console.WriteLine();
-
+            Console.WriteLine("-----");
+            foreach (var item in employees)
+            {
+                Console.WriteLine(item.FullName);
+            }
             Console.ReadLine();
         }
 
-        #region CreateEmployeesMethod
+        #region CreateEmployeesMethodtake
         private static List<Employee> CreateEmployees()
         {
             List<Employee> employees = new List<Employee>();
