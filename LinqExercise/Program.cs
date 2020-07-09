@@ -13,7 +13,10 @@ namespace LinqExercise
         {
             /*
              * 
-             * Complete every task using Method OR Query syntax. 
+             * Complete every task using Method OR Query syntax.
+             *
+             * HINT: Use the List of Methods defined in the Lecture Material Google Doc ***********
+             *
              * You may find that Method syntax is easier to use since it is most like C#
              * Every one of these can be completed using Linq and then printing with a foreach loop.
              * Push to your github when completed!
